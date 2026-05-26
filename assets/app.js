@@ -562,15 +562,20 @@ function renderItemNode(item) {
   const en = (item.title_en || "").trim();
   titleEl.textContent = "";
   if (zh && en && zh !== en) {
+    // Original title (English) first, Chinese translation below in smaller text
     const primary = document.createElement("span");
-    primary.textContent = zh;
+    primary.textContent = en;
     const sub = document.createElement("span");
     sub.className = "title-sub";
-    sub.textContent = en;
+    sub.textContent = zh;
     titleEl.appendChild(primary);
     titleEl.appendChild(sub);
+  } else if (zh) {
+    titleEl.textContent = zh;
+  } else if (en) {
+    titleEl.textContent = en;
   } else {
-    titleEl.textContent = item.title || zh || en;
+    titleEl.textContent = item.title || "未命名更新";
   }
   titleEl.href = item.url;
   return node;
